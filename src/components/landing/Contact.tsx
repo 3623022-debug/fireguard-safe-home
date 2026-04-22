@@ -31,9 +31,9 @@ export const Contact = () => {
 
             <div className="space-y-6">
               {[
-                { icon: Phone, label: "Телефон", value: "+7 (800) 555-13-37" },
-                { icon: Mail, label: "Email", value: "order@pyroshield.ru" },
-                { icon: MapPin, label: "Производство", value: "г. Нижний Новгород, ул. Промышленная 42" },
+                { icon: Phone, label: "Телефон", value: "+7 (919) 362-44-44" },
+                { icon: Mail, label: "Email", value: "info@indchem.ru" },
+                { icon: MapPin, label: "Производство", value: "г. Екатеринбург" },
               ].map((c) => (
                 <div key={c.label} className="flex items-start gap-4 group">
                   <div className="relative shrink-0">
