@@ -10,7 +10,7 @@ export const Footer = () => {
             <span className="font-display text-xl tracking-wider">PYRO<span className="text-primary">SHIELD</span></span>
           </div>
           <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            © 2026 · Все права защищены · ИНН 5260000000
+            © 2026 · Все права защищены · ИНН 667101001
           </div>
         </div>
       </div>

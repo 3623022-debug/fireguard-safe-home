@@ -5,12 +5,11 @@ export const Calculator = () => {
   const [area, setArea] = useState(100);
   const [layers, setLayers] = useState(2);
 
-  const { liters, canisters, price } = useMemo(() => {
+  const { liters, canisters } = useMemo(() => {
     const consumption = 0.13; // l of concentrate per m² per layer (300g/m² in 1:4 -> ~60g concentrate -> ~0.06L; using 0.13 inclusive)
     const liters = Math.ceil(area * layers * consumption);
     const canisters = Math.ceil(liters / 10);
-    const price = canisters * 4900;
-    return { liters, canisters, price };
+    return { liters, canisters };
   }, [area, layers]);
 
   return (
@@ -66,10 +65,6 @@ export const Calculator = () => {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground text-sm">Рабочего раствора</span>
                   <span className="font-mono">{liters * 5} л</span>
-                </div>
-                <div className="flex justify-between text-lg pt-3 border-t border-border">
-                  <span className="font-semibold">Ориентировочная цена</span>
-                  <span className="font-display text-2xl text-primary">{price.toLocaleString("ru-RU")} ₽</span>
                 </div>
               </div>
               <a href="#contact" className="mt-6 block text-center py-4 bg-gradient-fire text-primary-foreground font-bold uppercase tracking-wider text-sm hover:shadow-fire transition-all">
