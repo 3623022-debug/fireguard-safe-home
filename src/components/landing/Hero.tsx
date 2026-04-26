@@ -44,7 +44,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10"
           >
-            PYROSHIELD — концентрированный антипирен глубокого проникновения. Превращает древесину в трудногорючий материал на срок до 10 лет.
+            PYROSHIELD — концентрированный антипирен глубокого проникновения. Превращает древесину в трудногорючий материал на срок до <span className="text-primary font-bold">10</span> лет.
           </motion.p>
 
           <motion.div
