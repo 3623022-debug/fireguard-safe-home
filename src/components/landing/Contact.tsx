@@ -1,18 +1,33 @@
 import { useState } from "react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Contact = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget);
+    const { error } = await supabase.functions.invoke("send-telegram-lead", {
+      body: {
+        name: String(formData.get("name") || ""),
+        email: String(formData.get("email") || ""),
+        message: String(formData.get("message") || ""),
+      },
+    });
+
+    if (error) {
       setLoading(false);
-      toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
-      (e.target as HTMLFormElement).reset();
-    }, 800);
+      toast.error("Не удалось отправить заявку. Попробуйте ещё раз или напишите на info@indchem.ru.");
+      return;
+    }
+
+    setLoading(false);
+    toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
+    e.currentTarget.reset();
   };
 
   return (
@@ -56,15 +71,15 @@ export const Contact = () => {
             <div className="space-y-5">
               <div>
                 <label className="font-mono text-xs uppercase tracking-widest text-muted-foreground block mb-2">Имя</label>
-                <input required type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors" />
+                <input required name="name" type="text" className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors" />
               </div>
               <div>
-                <label className="font-mono text-xs uppercase tracking-widest text-muted-foreground block mb-2">Телефон</label>
-                <input required type="tel" placeholder="+7" className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors" />
+                <label className="font-mono text-xs uppercase tracking-widest text-muted-foreground block mb-2">Email</label>
+                <input required name="email" type="email" placeholder="mail@example.ru" className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors" />
               </div>
               <div>
-                <label className="font-mono text-xs uppercase tracking-widest text-muted-foreground block mb-2">Объект / комментарий</label>
-                <textarea rows={4} className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors resize-none" />
+                <label className="font-mono text-xs uppercase tracking-widest text-muted-foreground block mb-2">Сообщение</label>
+                <textarea required name="message" rows={4} className="w-full bg-background border border-border px-4 py-3 focus:border-primary outline-none transition-colors resize-none" />
               </div>
               <button type="submit" disabled={loading}
                 className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-fire text-primary-foreground font-bold uppercase tracking-wider text-sm hover:shadow-fire transition-all disabled:opacity-60">
