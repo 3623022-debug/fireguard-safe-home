@@ -10,7 +10,8 @@ export const Contact = () => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const { error } = await supabase.functions.invoke("send-telegram-lead", {
       body: {
         name: String(formData.get("name") || ""),
@@ -27,7 +28,7 @@ export const Contact = () => {
 
     setLoading(false);
     toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
-    e.currentTarget.reset();
+    form.reset();
   };
 
   return (
